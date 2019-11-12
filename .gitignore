@@ -3,4 +3,5 @@ venv/
 
 # pycharm configuration
 .idea/
+.vs
 
