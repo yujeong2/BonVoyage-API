@@ -21,7 +21,7 @@ def parse_request():
 
     print(thejson)
 
-    return jsonify(response)
+    return jsonify(response), jsonify(thejson)
 
 if __name__ == '__main__':
     app.run(debug=True)
