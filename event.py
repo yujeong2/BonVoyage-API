@@ -7,7 +7,7 @@ response = {
     "version": "2.0",
     "resultCode": "OK",
     "output": {
-        "title": "123"
+        "list": "0"
     }
 }
 
@@ -21,7 +21,8 @@ def parse_request():
 
     print(thejson)
 
-    return jsonify(response), jsonify(thejson)
+    return thejson
+
 
 if __name__ == '__main__':
     app.run(debug=True)

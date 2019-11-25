@@ -1,61 +1,42 @@
-from flask import Flask
-from flask_restful import reqparse, abort, Api, Resource
+from flask import Flask, jsonify
+from flask_restful import reqparse, Api, Resource
 
 app = Flask(__name__)
 api = Api(app)
 
-TODOS = {
-    'todo1': {'task': 'build an API'},
-    'todo2': {'task': 'NUGU request'},
-    'todo3': {'task': 'profit!'},
+response = {
+    "version": "2.0",
+    "resultCode": "OK",
+    "output": {
+        "list": "0"
+    }
 }
 
-def abort_if_todo_doesnt_exist(todo_id):
-    if todo_id not in TODOS:
-        abort(404, message="Todo {} doesn't exist".format(todo_id))
-
-parser = reqparse.RequestParser()
-parser.add_argument('task')
-
-
-# Todo
-# shows a single todo item and lets you delete a todo item
-class Todo(Resource):
-    def get(self, todo_id):
-        abort_if_todo_doesnt_exist(todo_id)
-        return TODOS[todo_id]
-
-    def delete(self, todo_id):
-        abort_if_todo_doesnt_exist(todo_id)
-        del TODOS[todo_id]
-        return '', 204
-
-    def put(self, todo_id):
-        args = parser.parse_args()
-        task = {'task': args['task']}
-        TODOS[todo_id] = task
-        return task, 201
-
-
-# TodoList
-# shows a list of all todos, and lets you POST to add new tasks
-class TodoList(Resource):
-    def get(self):
-        return TODOS
-
+class MakeResponse(Resource):
     def post(self):
-        args = parser.parse_args()
-        todo_id = int(max(TODOS.keys()).lstrip('todo')) + 1
-        todo_id = 'todo%i' % todo_id
-        TODOS[todo_id] = {'task': args['task']}
-        return TODOS[todo_id], 201
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('location', type=str)
+            parser.add_argument('week', type=str)
+            parser.add_argument('day', type=str)
+            args = parser.parse_args()
 
-##
-## Actually setup the Api resource routing here
-##
+            _Location = args['location']
+            _Week = args['week']
+            _Day = args['day']
 
-api.add_resource(TodoList, '/todos')
-api.add_resource(Todo, '/todos/<todo_id>')
+            output = {
+                "list": 0,
+                "location": _Location,
+                "week": _Week,
+                "day": _Day
+            }
+
+            response['output']= output
+
+            return jsonify(response)
+
+api.add_resource(MakeResponse, '/eventList')
 
 if __name__ == '__main__':
     app.run(debug=True)
