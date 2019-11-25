@@ -16,10 +16,9 @@ def parse_request():
     data = request.get_json(silent=True, cache=False)
     if data:
         thejson = json.dumps(data)
+        print(thejson['action']['parameters'])
     else:
-        thejson = "no json"
-
-    print(thejson)
+        print("no json")
 
     return jsonify(response)
 
