@@ -10,6 +10,10 @@ api = Api(app)
 def makedate(ymonth, mday):
     now = datetime.datetime.now()
     year = now.strftime('%Y')
+    if len(ymonth) == 1:
+        ymonth = '0'+ ymonth
+    if len(mday) == 1:
+        mday = '0' + mday
     date = year + ymonth + mday
     return date
 
