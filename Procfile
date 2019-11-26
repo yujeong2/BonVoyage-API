@@ -1,1 +1,1 @@
-web: gunicorn event:app
+web: gunicorn eventlist:app

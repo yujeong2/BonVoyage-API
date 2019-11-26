@@ -21,17 +21,6 @@ class MakeResponse(Resource):
             parser.add_argument('day', type=str)
             args = parser.parse_args()
 
-            _Location = args['location']
-            _Week = args['week']
-            _Day = args['day']
-
-            output = {
-                "list": 0,
-                "location": _Location,
-                "week": _Week,
-                "day": _Day
-            }
-
             response['output']= output
 
             return jsonify(response)
