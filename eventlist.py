@@ -1,19 +1,14 @@
-from flask_restful import Api, Resource, reqparse
-from flask import Flask, jsonify
+from flask_restful import Api, Resource
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 api = Api(app)
 
 
 class GetParams(Resource):
-    parser = reqparse.RequestParser()
-
-    parser.add_argument('location', type=str)
-    parser.add_argument('week', type=str)
-    parser.add_argument('day', type=str)
 
     def post(self):
-        data = GetParams.parser.parse_args()
+        data = request.get_json()
 
         location = data['action']['parameters']['location']['value']
         week = data['action']['parameters']['week']['value']
