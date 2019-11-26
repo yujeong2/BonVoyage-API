@@ -17,7 +17,7 @@ def parse_request():
 
     if data:
         params = data['action']['parameters']
-        print(jsonify(params))
+        print(params)
     else:
         print("no json")
 
