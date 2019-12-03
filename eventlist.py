@@ -32,7 +32,7 @@ class GetParams(Resource):
         listId, listTitle = content(location, date, date)
         list = len(listId)
 
-        print(listId, listTitle, list)
+        print(list)
 
         response = {
             "version": "2.0",
