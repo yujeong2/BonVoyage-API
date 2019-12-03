@@ -45,11 +45,7 @@ def content(sigungu, start, end):
                 content_title.append(data["response"]["body"]["items"]["item"][i]['title'])
                 content_id.append(data["response"]["body"]["items"]["item"][i]['contentid'])
 
-        return print(content_id, content_title)
+        return content_id, content_title
 
     else:
         return {"Error Code:": rescode}
-
-
-if __name__ == "__main__":
-    content(1, 20191111, 20191230)
