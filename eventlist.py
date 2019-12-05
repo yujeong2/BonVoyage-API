@@ -1,7 +1,7 @@
 from flask_restful import Api, Resource
 from flask import Flask, jsonify, request
 import datetime
-from getTitleList import content
+from getEventList import content, action
 
 app = Flask(__name__)
 api = Api(app)
@@ -29,19 +29,20 @@ class GetParams(Resource):
 
         date = makedate(ymonth, mday)
 
-        listId, listTitle = content(location, date, date)
-        list = len(listId)
+        c = content(location, date, date)
+        resultList = action(c)
 
-        print(list)
+        listLength = len(resultList)
 
         response = {
             "version": "2.0",
             "resultCode": "OK",
             "output": {
-                "list": 1
+                "list": listLength
             }
         }
 
+        print(response)
         return jsonify(response)
 
 
