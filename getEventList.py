@@ -1,6 +1,5 @@
 from urllib.request import urlopen
 import json
-from pprint import pprint
 import urllib
 
 
@@ -23,34 +22,28 @@ def content(sigungu, start, end):
     rescode = response.getcode()
     if (rescode == 200):
         response_body = response.read()
-        ##print(response_body.decode('utf-8'))
         data = json.loads(response_body.decode('utf-8'))
         global data_num
         data_num = data["response"]["body"]["totalCount"]
         if (data_num == 0):  # 정보없을
             return ("null")
-            # exit(0) 나중에null return
 
         elif (data_num == 1):
             for i in range(0, 1):  # 정보가 1개일때
                 content_title.append(data["response"]["body"]["items"]["item"]['title'])
                 content_id.append(data["response"]["body"]["items"]["item"]['contentid'])
-        ##            pprint(content_title[i])
-        ##            pprint(content_id[i])
 
         elif (data_num > 3):
             for i in range(0, 3):  # 정보가 3개보다많을때
                 content_title.append(data["response"]["body"]["items"]["item"][i]['title'])
                 content_id.append(data["response"]["body"]["items"]["item"][i]['contentid'])
-        ##            pprint(content_title[i])
-        ##            pprint(content_id[i])
+
 
         else:
             for i in range(data_num):  # 정보가2개 or 3개일때
                 content_title.append(data["response"]["body"]["items"]["item"][i]['title'])
                 content_id.append(data["response"]["body"]["items"]["item"][i]['contentid'])
-    ##            pprint(content_title[i])
-    ##            pprint(content_id[i])
+
     else:
         print("Error Code:" + rescode)
 
@@ -66,31 +59,26 @@ def content(sigungu, start, end):
     rescode_detail = [0, 0, 0]
     response_body_detail = []
     data_detail = []
-    eventplace = []
-    playtime = []
-    usetimefestival = []
+    place = []
+    time = []
+    cost = []
 
-    ##여기서 content_num이 0일경우랑 3보다 클경우 고민!!!!!!!!!!!!!!1
-    if (content_num == 0):
+    if content_num == 0:
         content_title.append("null")
-        eventplace.append("null")
-        playtime.append("null")
-        usetimefestival.append("null")
-    elif (content_num > 3):
+        place.append("null")
+        time.append("null")
+        cost.append("null")
+    elif content_num > 3:
         for a in range(0, 3):
             url_detail.append(url + "&contentId=" + str(content_id[a]))
             request_detail.append(urllib.request.Request(url_detail[a]))
             response_detail.append(urllib.request.urlopen(request_detail[a]))
             response_body_detail.append(response_detail[a].read())
-            # print(response_body_detail[a].decode('utf-8'))
             data_detail.append(json.loads(response_body_detail[a].decode('utf-8')))
-            eventplace.append(data_detail[a]['response']['body']['items']['item']['eventplace'])
-            playtime.append(data_detail[a]['response']['body']['items']['item']['playtime'])
-            usetimefestival.append(data_detail[a]['response']['body']['items']['item']['usetimefestival'])
-    ##        pprint(content_title[a])
-    ##        print(eventplace[a])
-    ##        print(playtime[a])
-    ##        print(usetimefestival[a])
+            place.append(data_detail[a]['response']['body']['items']['item']['eventplace'])
+            time.append(data_detail[a]['response']['body']['items']['item']['playtime'])
+            cost.append(data_detail[a]['response']['body']['items']['item']['usetimefestival'])
+
     else:
         for a in range(content_num):
             url_detail.append(url + "&contentId=" + str(content_id[a]))
@@ -99,32 +87,29 @@ def content(sigungu, start, end):
             response_body_detail.append(response_detail[a].read())
             # print(response_body_detail[a].decode('utf-8'))
             data_detail.append(json.loads(response_body_detail[a].decode('utf-8')))
-            eventplace.append(data_detail[a]['response']['body']['items']['item']['eventplace'])
-            playtime.append(data_detail[a]['response']['body']['items']['item']['playtime'])
-            usetimefestival.append(data_detail[a]['response']['body']['items']['item']['usetimefestival'])
-    ##            pprint(content_title[a])
-    ##            print(eventplace[a])
-    ##            print(playtime[a])
-    ##            print(usetimefestival[a])
-    return content_title, eventplace, playtime, usetimefestival
+            place.append(data_detail[a]['response']['body']['items']['item']['eventplace'])
+            time.append(data_detail[a]['response']['body']['items']['item']['playtime'])
+            cost.append(data_detail[a]['response']['body']['items']['item']['usetimefestival'])
+
+    return content_title, place, time, cost
 
 
 def action(c):
-    keys = ['number', 'title', 'eventplace', 'playtime', 'usetimefestival']
+    keys = ['number', 'title', 'place', 'time', 'cost']
     arr = []
-    if (data_num == 0):
+    if data_num == 0:
         values = ["null", "null", "null", "null", "null"]
         A = dict(zip(keys, values))
         arr.append(A)
         return arr
 
-    elif (data_num == 1):
+    elif data_num == 1:
         values = ["1", c[0], c[1], c[2], c[3]]
         A = dict(zip(keys, values))
         arr.append(A)
         return arr
 
-    elif (data_num == 2):
+    elif data_num == 2:
         values_1 = ["1", c[0][0], c[1][0], c[2][0], c[3][0]]
         values_2 = ["2", c[0][1], c[1][1], c[2][1], c[3][1]]
         A = dict(zip(keys, values_1))

@@ -17,6 +17,33 @@ def makedate(ymonth, mday):
     date = year + ymonth + mday
     return date
 
+def makeResponse(resultList):
+    listLength = len(resultList)
+
+    if listLength == 0:
+        response = {
+            "version": "2.0",
+            "resultCode": "OK",
+            "output": {
+                    "list": 0
+            }
+        }
+        return response
+
+    elif listLength == 1:
+        response = {
+            "version": "2.0",
+            "resultCode": "OK",
+            "output": {
+                "list": 1,
+                "title": resultList[0].get('title'),
+                "place": resultList[0].get('place'),
+                "cost": resultList[0].get('cost'),
+                "time": resultList[0].get('time')
+            }
+        }
+        return response
+
 
 class GetParams(Resource):
 
@@ -31,16 +58,7 @@ class GetParams(Resource):
 
         c = content(location, date, date)
         resultList = action(c)
-
-        listLength = len(resultList)
-
-        response = {
-            "version": "2.0",
-            "resultCode": "OK",
-            "output": {
-                "list": listLength
-            }
-        }
+        response = makeResponse(resultList)
 
         print(response)
         return jsonify(response)
