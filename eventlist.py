@@ -34,7 +34,7 @@ def make_response(result_list):
         for index, result in enumerate(result_list, 1):
             for key, value in result.items():
                 if key in ['title', 'place', 'cost', 'time']:
-                    result_output[key + str(index)] = value
+                    result_output[key + str(index)] = value[0]
 
         response['output'] = dict(response['output'], **result_output)
     return response
