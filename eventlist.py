@@ -17,32 +17,27 @@ def makedate(ymonth, mday):
     date = year + ymonth + mday
     return date
 
-def makeResponse(resultList):
-    listLength = len(resultList)
 
-    if listLength == 0:
-        response = {
-            "version": "2.0",
-            "resultCode": "OK",
-            "output": {
-                    "list": 0
-            }
+def make_response(result_list):
+    response = {
+        "version": "2.0",
+        "resultCode": "OK",
+        "output": {
+            'list': str(0)
         }
-        return response
+    }
 
-    elif listLength == 1:
-        response = {
-            "version": "2.0",
-            "resultCode": "OK",
-            "output": {
-                "list": 1,
-                "title": resultList[0].get('title'),
-                "place": resultList[0].get('place'),
-                "cost": resultList[0].get('cost'),
-                "time": resultList[0].get('time')
-            }
-        }
-        return response
+    if result_list:
+        response['output']['list'] = str(len(result_list))
+        result_output = {}
+
+        for index, result in enumerate(result_list, 1):
+            for key, value in result.items():
+                if key in ['title', 'place', 'cost', 'time']:
+                    result_output[key + str(index)] = value
+
+        response['output'] = dict(response['output'], **result_output)
+    return response
 
 
 class GetParams(Resource):
@@ -57,10 +52,11 @@ class GetParams(Resource):
         date = makedate(ymonth, mday)
 
         c = content(location, date, date)
-        resultList = action(c)
-        response = makeResponse(resultList)
+        result_list = action(c)
+        response = make_response(result_list)
 
         print(response)
+
         return jsonify(response)
 
 
