@@ -23,12 +23,12 @@ def make_response(result_list):
         "version": "2.0",
         "resultCode": "OK",
         "output": {
-            'list': str(0)
+            "list": str(0)
         }
     }
 
     if result_list:
-        response['output']['list'] = str(len(result_list))
+        response["output"]["list"] = str(len(result_list))
         result_output = {}
 
         for index, result in enumerate(result_list, 1):
@@ -36,7 +36,7 @@ def make_response(result_list):
                 if key in ['title', 'place', 'cost', 'time']:
                     result_output[key + str(index)] = value[0]
 
-        response['output'] = dict(response['output'], **result_output)
+        response["output"] = dict(response["output"], **result_output)
     return response
 
 
@@ -57,7 +57,7 @@ class GetParams(Resource):
 
         print(response)
 
-        return jsonify(response)
+        return response
 
 
 api.add_resource(GetParams, '/eventList')
