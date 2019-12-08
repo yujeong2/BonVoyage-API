@@ -18,7 +18,7 @@ def makedate(ymonth, mday):
     return date
 
 
-def make_response(result_list):
+def make_response(result_list, only_list):
     response = {
         "version": "2.0",
         "resultCode": "OK",
@@ -29,6 +29,9 @@ def make_response(result_list):
 
     if result_list:
         response["output"]["list"] = str(len(result_list))
+        if only_list:
+            return response
+
         result_output = {}
 
         for index, result in enumerate(result_list, 1):
@@ -41,7 +44,6 @@ def make_response(result_list):
 
 
 class GetParams(Resource):
-
     def post(self):
         data = request.get_json()
 
@@ -54,12 +56,12 @@ class GetParams(Resource):
         c = content(location, date, date)
 
         result_list = action(c)
-        response = make_response(result_list)
+        response = make_response(result_list, only_list=True)
 
         return jsonify(response)
 
 
-class GetItem1(Resource):
+class GetItem(Resource):
     def post(self):
         data = request.get_json()
         print(data)
@@ -73,13 +75,15 @@ class GetItem1(Resource):
         c = content(location, date, date)
 
         result_list = action(c)
-        response = make_response(result_list)
+        response = make_response(result_list, only_list=False)
 
         return jsonify(response)
 
 
 api.add_resource(GetParams, '/eventList')
-api.add_resource(GetItem1, '/eventItem1')
+api.add_resource(GetItem, '/eventItem1')
+api.add_resource(GetItem, '/eventItem2')
+api.add_resource(GetItem, '/eventItem3')
 
 if __name__ == '__main__':
     app.run(debug=True)
