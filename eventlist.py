@@ -2,6 +2,7 @@ from flask_restful import Api, Resource
 from flask import Flask, jsonify, request
 import datetime
 from getEventList import content, action
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -37,7 +38,7 @@ def make_response(result_list):
                     result_output[key + str(index)] = value[0]
 
         response["output"] = dict(response["output"], **result_output)
-    return response
+    return json.dumps(response)
 
 
 class GetParams(Resource):
