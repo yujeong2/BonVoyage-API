@@ -44,6 +44,7 @@ def make_response(result_list):
 class GetParams(Resource):
 
     def post(self):
+
         data = request.get_json()
 
         location = data['action']['parameters']['location']['value']
@@ -56,6 +57,7 @@ class GetParams(Resource):
         result_list = action(c)
         response = make_response(result_list)
 
+        print(data)
         print(response)
         print(json.dumps(response))
         return json.dumps(response)
