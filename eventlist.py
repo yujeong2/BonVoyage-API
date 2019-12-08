@@ -2,7 +2,6 @@ from flask_restful import Api, Resource
 from flask import Flask, jsonify, request
 import datetime
 from getEventList import content, action
-import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -52,15 +51,13 @@ class GetParams(Resource):
 
         date = makedate(ymonth, mday)
 
-        print(f'{location}, {ymonth}, {mday}, {date}')
         c = content(location, date, date)
-        print(c)
 
         result_list = action(c)
-        print(result_list)
         response = make_response(result_list)
 
-        return json.dumps(response)
+        print(response)
+        return jsonify(response)
 
 
 api.add_resource(GetParams, '/eventList')
