@@ -38,7 +38,7 @@ def make_response(result_list):
                     result_output[key + str(index)] = value[0]
 
         response["output"] = dict(response["output"], **result_output)
-    return json.dumps(response)
+    return response
 
 
 class GetParams(Resource):
@@ -57,8 +57,8 @@ class GetParams(Resource):
         response = make_response(result_list)
 
         print(response)
-
-        return response
+        print(json.dumps(response))
+        return json.dumps(response)
 
 
 api.add_resource(GetParams, '/eventList')
