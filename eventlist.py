@@ -24,12 +24,12 @@ def make_response(result_list):
         "version": "2.0",
         "resultCode": "OK",
         "output": {
-            "list": 0
+            "list": "0"
         }
     }
 
     if result_list:
-        response["output"]["list"] = len(result_list)
+        response["output"]["list"] = str(len(result_list))
         result_output = {}
 
         for index, result in enumerate(result_list, 1):
@@ -44,7 +44,6 @@ def make_response(result_list):
 class GetParams(Resource):
 
     def post(self):
-
         data = request.get_json()
 
         location = data['action']['parameters']['location']['value']
@@ -57,14 +56,20 @@ class GetParams(Resource):
         result_list = action(c)
         response = make_response(result_list)
 
-        print(request)
+        dummy_response = {'output': {'cost1': '부스별 상이',
+                                     'list': '1',
+                                     'place1': '서울 COEX B홀',
+                                     'time1': '2019년 12월 19일(목) ~ 21일(토) : 오전 11시 ~ 오후 7시\n'
+                                              '2019년 12월 22일(일) : 오전 11시 ~ 오후 6시 (입장마감 오후 5시 30분)',
+                                     'title1': 'K-핸드메이드페어 2019'},
+                          'resultCode': 'OK',
+                          'version': '2.0'}
         print(response)
         print(json.dumps(response))
-        return json.dumps(response)
+        return json.dumps(dummy_response)
 
 
 api.add_resource(GetParams, '/eventList')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
