@@ -56,11 +56,33 @@ class GetParams(Resource):
         result_list = action(c)
         response = make_response(result_list)
 
-        print(response)
+        print(jsonify(response))
+        print(type(jsonify(response)))
+        return jsonify(response)
+
+
+class GetItem1(Resource):
+    def post(self):
+        data = request.get_json()
+
+        location = data['action']['parameters']['location']['value']
+        ymonth = data['action']['parameters']['ymonth']['value']
+        mday = data['action']['parameters']['mday']['value']
+
+        date = makedate(ymonth, mday)
+
+        c = content(location, date, date)
+
+        result_list = action(c)
+        response = make_response(result_list)
+
+        print(jsonify(response))
+        print(type(jsonify(response)))
         return jsonify(response)
 
 
 api.add_resource(GetParams, '/eventList')
+api.add_resource(GetItem1, '/eventItem1')
 
 if __name__ == '__main__':
     app.run(debug=True)
