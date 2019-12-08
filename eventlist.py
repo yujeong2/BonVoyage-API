@@ -56,14 +56,13 @@ class GetParams(Resource):
         result_list = action(c)
         response = make_response(result_list)
 
-        print(jsonify(response))
-        print(type(jsonify(response)))
         return jsonify(response)
 
 
 class GetItem1(Resource):
     def post(self):
         data = request.get_json()
+        print(data)
 
         location = data['action']['parameters']['location']['value']
         ymonth = data['action']['parameters']['ymonth']['value']
@@ -76,13 +75,11 @@ class GetItem1(Resource):
         result_list = action(c)
         response = make_response(result_list)
 
-        print(jsonify(response))
-        print(type(jsonify(response)))
         return jsonify(response)
 
 
 api.add_resource(GetParams, '/eventList')
-api.add_resource(GetItem1, '/eventItem1')
+api.add_resource(GetItem1, '/eventItem')
 
 if __name__ == '__main__':
     app.run(debug=True)
