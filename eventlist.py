@@ -46,6 +46,7 @@ def make_response(result_list, only_list):
 class GetParams(Resource):
     def post(self):
         data = request.get_json()
+        print(data)
 
         location = data['action']['parameters']['location']['value']
         ymonth = data['action']['parameters']['ymonth']['value']
