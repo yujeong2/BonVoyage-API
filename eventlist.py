@@ -79,7 +79,7 @@ class GetItem1(Resource):
 
 
 api.add_resource(GetParams, '/eventList')
-api.add_resource(GetItem1, '/eventItem')
+api.add_resource(GetItem1, '/eventItem1')
 
 if __name__ == '__main__':
     app.run(debug=True)
