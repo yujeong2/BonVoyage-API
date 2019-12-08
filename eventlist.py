@@ -81,9 +81,7 @@ class GetItem(Resource):
 
 
 api.add_resource(GetParams, '/eventList')
-api.add_resource(GetItem, '/eventItem1')
-api.add_resource(GetItem, '/eventItem2')
-api.add_resource(GetItem, '/eventItem3')
+api.add_resource(GetItem, '/eventItem1', '/eventItem2', '/eventItem3')
 
 if __name__ == '__main__':
     app.run(debug=True)
