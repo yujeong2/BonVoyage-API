@@ -98,7 +98,7 @@ class GetDetail(Resource):
         c = content(location, date, date)
 
         result_list = action(c)
-        response = make_response(result_list, only_list=True)
+        response = make_response(result_list, only_list=False)
 
         return jsonify(response)
 
