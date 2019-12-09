@@ -33,11 +33,15 @@ def make_response(result_list, only_list):
             return response
 
         result_output = {}
+        try:
+            for index, result in enumerate(result_list, 1):
+                for key, value in result.items():
+                    if key in ['title', 'place', 'cost', 'time']:
+                        result_output[key + str(index)] = value[0]
 
-        for index, result in enumerate(result_list, 1):
-            for key, value in result.items():
-                if key in ['title', 'place', 'cost', 'time']:
-                    result_output[key + str(index)] = value[0]
+        except Exception as e:
+            print(str(e))
+            print(value)
 
         response["output"] = dict(response["output"], **result_output)
     return response
