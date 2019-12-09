@@ -105,7 +105,7 @@ class GetDetail(Resource):
 
 api.add_resource(GetParams, '/eventList')
 api.add_resource(GetItem, '/eventItem1', '/eventItem2', '/eventItem3')
-api.add_resource(GetDetail, '/yes', '2_1', '/2_2', '/3_1', '/3_2', '/3_3')
+api.add_resource(GetDetail, '/yes', '/2_1', '/2_2', '/3_1', '/3_2', '/3_3')
 
 if __name__ == '__main__':
     app.run(debug=True)
