@@ -18,7 +18,7 @@ def makedate(ymonth, mday):
     return date
 
 
-def make_response(result_list):
+def make_response(result_list, one_item):
     response = {
         "version": "2.0",
         "resultCode": "OK",
@@ -35,7 +35,11 @@ def make_response(result_list):
             for index, result in enumerate(result_list, 1):
                 for key, value in result.items():
                     if key in ['title', 'place', 'cost', 'time']:
-                        result_output[key + str(index)] = value
+                            if one_item:
+                                result_output[key + str(index)] = value[0]
+                            else:
+                                result_output[key + str(index)] = value
+
 
         except Exception as e:
             print(str(e))
@@ -59,13 +63,34 @@ class GetParams(Resource):
         c = content(location, date, date)
 
         result_list = action(c)
-        response = make_response(result_list)
+        response = make_response(result_list, one_item = False)
 
         return jsonify(response)
 
 
-api.add_resource(GetParams, '/eventList', '/eventItem1', '/eventItem2', '/eventItem3',
+class GetParams1(Resource):
+    def post(self):
+        data = request.get_json()
+        print(data)
+
+        location = data['action']['parameters']['location']['value']
+        ymonth = data['action']['parameters']['ymonth']['value']
+        mday = data['action']['parameters']['mday']['value']
+
+        date = makedate(ymonth, mday)
+
+        c = content(location, date, date)
+
+        result_list = action(c)
+        response = make_response(result_list, one_item = True)
+
+        return jsonify(response)
+
+
+api.add_resource(GetParams, '/eventList', '/eventItem2', '/eventItem3',
                             '/yes', '/2_1', '/2_2', '/3_1', '/3_2', '/3_3')
+
+api.add_resource(GetParams1, '/eventItem1')
 
 if __name__ == '__main__':
     app.run(debug=True)
