@@ -88,9 +88,9 @@ class GetParams1(Resource):
 
 
 api.add_resource(GetParams, '/eventList', '/eventItem2', '/eventItem3',
-                            '/yes', '/2_1', '/2_2', '/3_1', '/3_2', '/3_3')
+                            '/2_1', '/2_2', '/3_1', '/3_2', '/3_3')
 
-api.add_resource(GetParams1, '/eventItem1')
+api.add_resource(GetParams1, '/eventItem1', '/yes')
 
 if __name__ == '__main__':
     app.run(debug=True)
