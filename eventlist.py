@@ -18,7 +18,7 @@ def makedate(ymonth, mday):
     return date
 
 
-def make_response(result_list, only_list):
+def make_response(result_list):
     response = {
         "version": "2.0",
         "resultCode": "OK",
@@ -29,8 +29,6 @@ def make_response(result_list, only_list):
 
     if result_list:
         response["output"]["list"] = str(len(result_list))
-        if only_list:
-            return response
 
         result_output = {}
         try:
@@ -61,7 +59,7 @@ class GetParams(Resource):
         c = content(location, date, date)
 
         result_list = action(c)
-        response = make_response(result_list, only_list=True)
+        response = make_response(result_list)
 
         return jsonify(response)
 
