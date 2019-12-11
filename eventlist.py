@@ -69,7 +69,6 @@ class GetParams(Resource):
 class GetItem(Resource):
     def post(self):
         data = request.get_json()
-        print(data)
 
         location = data['action']['parameters']['location']['value']
         ymonth = data['action']['parameters']['ymonth']['value']
@@ -81,13 +80,13 @@ class GetItem(Resource):
 
         result_list = action(c)
         response = make_response(result_list, only_list=False)
+        print(response)
 
         return jsonify(response)
 
 class GetDetail(Resource):
     def post(self):
         data = request.get_json()
-        print(data)
 
         location = data['action']['parameters']['location']['value']
         ymonth = data['action']['parameters']['ymonth']['value']
@@ -99,6 +98,7 @@ class GetDetail(Resource):
 
         result_list = action(c)
         response = make_response(result_list, only_list=False)
+        print(response)
 
         return jsonify(response)
 
