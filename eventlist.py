@@ -37,7 +37,7 @@ def make_response(result_list, only_list):
             for index, result in enumerate(result_list, 1):
                 for key, value in result.items():
                     if key in ['title', 'place', 'cost', 'time']:
-                        result_output[key + str(index)] = value[0]
+                        result_output[key + str(index)] = value
 
         except Exception as e:
             print(str(e))
@@ -80,7 +80,6 @@ class GetItem(Resource):
 
         result_list = action(c)
         response = make_response(result_list, only_list=False)
-        print(response)
 
         return jsonify(response)
 
@@ -98,7 +97,6 @@ class GetDetail(Resource):
 
         result_list = action(c)
         response = make_response(result_list, only_list=False)
-        print(response)
 
         return jsonify(response)
 
