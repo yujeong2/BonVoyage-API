@@ -1,12 +1,31 @@
-from flask import Flask
+from flask import Flask, jsonify
+from flask_restful import reqparse, Api, Resource
 
 app = Flask(__name__)
+api = Api(app)
 
+response = {
+    "version": "2.0",
+    "resultCode": "OK",
+    "output": {
+        "list": "0"
+    }
+}
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+class MakeResponse(Resource):
+    def post(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('location', type=str)
+            parser.add_argument('week', type=str)
+            parser.add_argument('day', type=str)
+            args = parser.parse_args()
 
+            response['output']= output
+
+            return jsonify(response)
+
+api.add_resource(MakeResponse, '/eventList')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
