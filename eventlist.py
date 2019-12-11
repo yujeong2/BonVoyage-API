@@ -2,23 +2,40 @@ from flask_restful import Api, Resource
 from flask import Flask, jsonify, request
 import datetime
 from getEventList import content, action
+from dbconnect import pymysql
+
 
 app = Flask(__name__)
 api = Api(app)
 
 
-def makedate(ymonth, mday):
+def makedate(ymonth, mday, has_dash):
     now = datetime.datetime.now()
     year = now.strftime('%Y')
     if len(ymonth) == 1:
         ymonth = '0' + ymonth
     if len(mday) == 1:
         mday = '0' + mday
-    date = year + ymonth + mday
-    return date
+
+    if has_dash:
+        date = year +'-'+ ymonth +'-'+ mday
+        return date
+    else:
+        date = year + ymonth + mday
+        return date
 
 
-def make_response(result_list, one_item):
+def translate_code(val):
+    return {
+        '1': '11680', '2': '11740', '3': '11305', '4': '11500', '5': '11620',
+        '6': '11215', '7': '11530', '8': '11545', '9': '11350', '10': '11320',
+        '11': '11230', '12': '11590', '13': '11440', '14': '11410', '15': '11650',
+        '16': '11200', '17': '11290', '18': '11710', '19': '11470', '20': '11560',
+        '21': '11170', '22': '11380', '23': '11110', '24': '11140', '25': '11260'
+    }.get(val)
+
+
+def make_response(result_list, foot_traffic, one_item):
     response = {
         "version": "2.0",
         "resultCode": "OK",
@@ -46,6 +63,7 @@ def make_response(result_list, one_item):
             print(value)
 
         response["output"] = dict(response["output"], **result_output)
+        response["output"]["traffic"] = str(foot_traffic)
     return response
 
 
@@ -58,12 +76,16 @@ class GetParams(Resource):
         ymonth = data['action']['parameters']['ymonth']['value']
         mday = data['action']['parameters']['mday']['value']
 
-        date = makedate(ymonth, mday)
+        api_date = makedate(ymonth, mday, has_dash = Fase)
+        c = content(location, api_date, api_date)
 
-        c = content(location, date, date)
-
+        db_date = makedate(ymonth, mday, has_dash = True)
+        val = translate_code(str(location))
+        
         result_list = action(c)
-        response = make_response(result_list, one_item = False)
+        foot_traffic = pymysql(val, db_date)
+        
+        response = make_response(result_list, foot_traffic, one_item = False)
 
         return jsonify(response)
 
@@ -77,12 +99,16 @@ class GetParams1(Resource):
         ymonth = data['action']['parameters']['ymonth']['value']
         mday = data['action']['parameters']['mday']['value']
 
-        date = makedate(ymonth, mday)
+        api_date = makedate(ymonth, mday, has_dash = Fase)
+        c = content(location, api_date, api_date)
 
-        c = content(location, date, date)
-
+        db_date = makedate(ymonth, mday, has_dash = True)
+        val = translate_code(str(location))
+        
         result_list = action(c)
-        response = make_response(result_list, one_item = True)
+        foot_traffic = pymysql(val, db_date)
+        
+        response = make_response(result_list, foot_traffic, one_item = True)
 
         return jsonify(response)
 
