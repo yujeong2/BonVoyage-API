@@ -65,7 +65,7 @@ class GetParams(Resource):
 
         return jsonify(response)
 
-
+'''
 class GetItem(Resource):
     def post(self):
         data = request.get_json()
@@ -99,11 +99,11 @@ class GetDetail(Resource):
         response = make_response(result_list, only_list=False)
 
         return jsonify(response)
+    
+'''
 
-
-api.add_resource(GetParams, '/eventList')
-api.add_resource(GetItem, '/eventItem1', '/eventItem2', '/eventItem3')
-api.add_resource(GetDetail, '/yes', '/2_1', '/2_2', '/3_1', '/3_2', '/3_3')
+api.add_resource(GetParams, '/eventList', '/eventItem1', '/eventItem2', '/eventItem3',
+                            '/yes', '/2_1', '/2_2', '/3_1', '/3_2', '/3_3')
 
 if __name__ == '__main__':
     app.run(debug=True)
