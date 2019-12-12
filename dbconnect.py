@@ -9,7 +9,7 @@ import pymysql
 
 def predicted_pop(gu, date):
 
-    conn = pymysql.connect(host='172.16.98.77', port=3306, user = 'bonvoyage', password='9897', db = 'predict_population', charset = 'utf8')
+    conn = pymysql.connect(host='172.16.160.202', port=3306, user = 'bonvoyage', password='9897', db = 'predict_population', charset = 'utf8')
     curs = conn.cursor(pymysql.cursors.DictCursor)
     curs1 = conn.cursor(pymysql.cursors.DictCursor)
     sql = "SELECT `%s` FROM predict_population.predictedpopulation_3 WHERE date = '%s';"%(gu,date)
