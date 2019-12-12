@@ -48,13 +48,13 @@ def make_response(result_list, foot_traffic, one_item):
         response["output"]["list"] = str(len(result_list))
 
         result_output = {}
-            for index, result in enumerate(result_list, 1):
-                for key, value in result.items():
-                    if key in ['title', 'place', 'cost', 'time']:
-                            if one_item:
-                                result_output[key + str(index)] = value[0]
-                            else:
-                                result_output[key + str(index)] = value
+        for index, result in enumerate(result_list, 1):
+            for key, value in result.items():
+                if key in ['title', 'place', 'cost', 'time']:
+                        if one_item:
+                            result_output[key + str(index)] = value[0]
+                        else:
+                            result_output[key + str(index)] = value
 
 
 
