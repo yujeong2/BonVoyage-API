@@ -71,7 +71,7 @@ class GetParams(Resource):
         ymonth = data['action']['parameters']['ymonth']['value']
         mday = data['action']['parameters']['mday']['value']
 
-        api_date = makedate(ymonth, mday, has_dash = Fase)
+        api_date = makedate(ymonth, mday, has_dash = False)
         c = content(location, api_date, api_date)
 
         db_date = makedate(ymonth, mday, has_dash = True)
@@ -94,7 +94,7 @@ class GetParams1(Resource):
         ymonth = data['action']['parameters']['ymonth']['value']
         mday = data['action']['parameters']['mday']['value']
 
-        api_date = makedate(ymonth, mday, has_dash = Fase)
+        api_date = makedate(ymonth, mday, has_dash = False)
         c = content(location, api_date, api_date)
 
         db_date = makedate(ymonth, mday, has_dash = True)
