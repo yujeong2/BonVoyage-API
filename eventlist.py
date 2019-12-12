@@ -2,7 +2,7 @@ from flask_restful import Api, Resource
 from flask import Flask, jsonify, request
 import datetime
 from getEventList import content, action
-from dbconnect import pymysql
+from dbconnect import predicted_pop
 
 
 app = Flask(__name__)
