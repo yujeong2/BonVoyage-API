@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 import datetime
 from getEventList import content, action
 from dbconnect import predicted_pop
+import socket
 
 
 app = Flask(__name__)
@@ -115,4 +116,6 @@ api.add_resource(GetParams, '/eventList', '/eventItem2', '/eventItem3',
 api.add_resource(GetParams1, '/eventItem1', '/yes')
 
 if __name__ == '__main__':
+    socks = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    socket.settimeout(10.0)
     app.run(debug=True)
