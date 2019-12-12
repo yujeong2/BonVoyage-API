@@ -48,7 +48,6 @@ def make_response(result_list, foot_traffic, one_item):
         response["output"]["list"] = str(len(result_list))
 
         result_output = {}
-        try:
             for index, result in enumerate(result_list, 1):
                 for key, value in result.items():
                     if key in ['title', 'place', 'cost', 'time']:
@@ -58,9 +57,6 @@ def make_response(result_list, foot_traffic, one_item):
                                 result_output[key + str(index)] = value
 
 
-        except Exception as e:
-            print(str(e))
-            print(value)
 
         response["output"] = dict(response["output"], **result_output)
         response["output"]["traffic"] = str(foot_traffic)
@@ -70,7 +66,6 @@ def make_response(result_list, foot_traffic, one_item):
 class GetParams(Resource):
     def post(self):
         data = request.get_json()
-        print(data)
 
         location = data['action']['parameters']['location']['value']
         ymonth = data['action']['parameters']['ymonth']['value']
@@ -86,6 +81,7 @@ class GetParams(Resource):
         foot_traffic = pymysql(val, db_date)
         
         response = make_response(result_list, foot_traffic, one_item = False)
+        print(response)
 
         return jsonify(response)
 
@@ -93,7 +89,6 @@ class GetParams(Resource):
 class GetParams1(Resource):
     def post(self):
         data = request.get_json()
-        print(data)
 
         location = data['action']['parameters']['location']['value']
         ymonth = data['action']['parameters']['ymonth']['value']
@@ -109,6 +104,7 @@ class GetParams1(Resource):
         foot_traffic = pymysql(val, db_date)
         
         response = make_response(result_list, foot_traffic, one_item = True)
+        print(response)
 
         return jsonify(response)
 
