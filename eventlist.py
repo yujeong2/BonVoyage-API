@@ -78,7 +78,7 @@ class GetParams(Resource):
         val = translate_code(str(location))
         
         result_list = action(c)
-        foot_traffic = pymysql(val, db_date)
+        foot_traffic = pymysql(val, str(db_date))
         
         response = make_response(result_list, foot_traffic, one_item = False)
         print(response)
@@ -101,7 +101,7 @@ class GetParams1(Resource):
         val = translate_code(str(location))
         
         result_list = action(c)
-        foot_traffic = pymysql(val, db_date)
+        foot_traffic = pymysql(val, str(db_date))
         
         response = make_response(result_list, foot_traffic, one_item = True)
         print(response)
