@@ -12,8 +12,8 @@ def predicted_pop(gu, date):
     conn = pymysql.connect(host='us-cdbr-iron-east-05.cleardb.net', port=3306, user = 'b987ca09f52fe8', password='0e33ea25', db = 'heroku_f3edcccc308c4b9', charset = 'utf8')
     curs = conn.cursor(pymysql.cursors.DictCursor)
     curs1 = conn.cursor(pymysql.cursors.DictCursor)
-    sql = "SELECT `%s` FROM predict_population.predictedpopulation WHERE date = '%s';"%(gu,date)
-    sql1 = "SELECT `%s` FROM predict_population.predictedpopulation WHERE date = 'average';"%(gu)
+    sql = "SELECT `%s` FROM heroku_f3edcccc308c4b9.predictedpopulation WHERE date = '%s';"%(gu,date)
+    sql1 = "SELECT `%s` FROM heroku_f3edcccc308c4b9.predictedpopulation WHERE date = 'average';"%(gu)
     
     curs.execute(sql)
     rows = curs.fetchall()
