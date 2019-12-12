@@ -30,4 +30,3 @@ def predicted_pop(gu, date):
     else:
         return "similar"
 
-
