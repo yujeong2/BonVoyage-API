@@ -98,9 +98,6 @@ def action(c):
     keys = ['number', 'title', 'place', 'time', 'cost']
     arr = []
     if data_num == 0:
-        values = ["null", "null", "null", "null", "null"]
-        A = dict(zip(keys, values))
-        arr.append(A)
         return arr
 
     elif data_num == 1:

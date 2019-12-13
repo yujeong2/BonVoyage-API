@@ -44,7 +44,10 @@ def make_response(result_list, foot_traffic, one_item):
         }
     }
 
-    if result_list:
+    if len(result_list) == 0:
+        return response
+    
+    elif len(result_list)>0:
         response["output"]["list"] = str(len(result_list))
 
         result_output = {}
@@ -100,7 +103,7 @@ class GetParams1(Resource):
         db_date = makedate(ymonth, mday, has_dash = True)
         val = translate_code(str(location))
         
-        result_list = action(c)
+        result_list = ac                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           tion(c)
         foot_traffic = predicted_pop(val, str(db_date))
         
         response = make_response(result_list, foot_traffic, one_item = True)
